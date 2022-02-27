@@ -299,6 +299,7 @@ def draw_cd_diagram(df_perf=None, alpha=0.05, title=None, labels=False):
     if title:
         plt.title(title,fontdict=font, y=0.9, x=0.5)
     plt.savefig('cd-diagram.png',bbox_inches='tight')
+    plt.show()
 
 def wilcoxon_holm(alpha=0.05, df_perf=None):
     """
@@ -307,8 +308,7 @@ def wilcoxon_holm(alpha=0.05, df_perf=None):
     """
     print(pd.unique(df_perf['classifier_name']))
     # count the number of tested datasets per classifier
-    df_counts = pd.DataFrame({'count': df_perf.groupby(
-        ['classifier_name']).size()}).reset_index()
+    df_counts = pd.DataFrame({'count': df_perf.groupby(['classifier_name']).size()}).reset_index()
     # get the maximum number of tested datasets
     max_nb_datasets = df_counts['count'].max()
     # get the list of classifiers who have been tested on nb_max_datasets
@@ -378,6 +378,6 @@ def wilcoxon_holm(alpha=0.05, df_perf=None):
     # return the p-values and the average ranks
     return p_values, average_ranks, max_nb_datasets
 
-df_perf = pd.read_csv('exampleLY15.csv', index_col=False)
+df_perf = pd.read_csv('exampleLY.csv', index_col=False)
 
 draw_cd_diagram(df_perf=df_perf, title='Accuracy', labels=True)
