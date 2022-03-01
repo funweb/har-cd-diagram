@@ -275,7 +275,7 @@ def form_cliques(p_values, nnames):
     return networkx.find_cliques(g)
 
 
-def draw_cd_diagram(df_perf=None, alpha=0.05, title=None, labels=False):
+def draw_cd_diagram(df_perf=None, alpha=0.05, title=None, labels=False, name=""):
     """
     Draws the critical difference diagram given the list of pairwise classifiers that are
     significant or not
@@ -298,7 +298,7 @@ def draw_cd_diagram(df_perf=None, alpha=0.05, title=None, labels=False):
         }
     if title:
         plt.title(title,fontdict=font, y=0.9, x=0.5)
-    plt.savefig('cd-diagram.png',bbox_inches='tight')
+    plt.savefig('{}CdDiagram.png'.format(name),bbox_inches='tight')
     plt.show()
 
 def wilcoxon_holm(alpha=0.05, df_perf=None):
@@ -378,6 +378,10 @@ def wilcoxon_holm(alpha=0.05, df_perf=None):
     # return the p-values and the average ranks
     return p_values, average_ranks, max_nb_datasets
 
-df_perf = pd.read_csv('exampleLY.csv', index_col=False)
+data_name_file = "data_total_acc"
+data_name_file = "data_kernel_number_9999"
+data_name_file = "data_kernel_wide_9999"
 
-draw_cd_diagram(df_perf=df_perf, title='Accuracy', labels=True)
+df_perf = pd.read_csv('{}.csv'.format(data_name_file), index_col=False)
+
+draw_cd_diagram(df_perf=df_perf, title='Accuracy', labels=True, name=data_name_file)
